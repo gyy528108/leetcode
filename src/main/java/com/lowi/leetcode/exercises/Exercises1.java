@@ -183,4 +183,7 @@ public class Exercises1 {
         return ret.toString();
     }
 
+    public void s(){
+
+    }
 }
