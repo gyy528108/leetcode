@@ -17,9 +17,15 @@ public class Exercises2 {
 //        boolean palindrome1 = isPalindrome(101);
 //        System.out.println("palindrome1 = " + palindrome1);
 
-        int[] a = new int[]{1, 2, 1};
-        int i1 = maxArea(a);
-        System.out.println("i1 = " + i1);
+//        int[] a = new int[]{1, 2, 1};
+//        int i1 = maxArea(a);
+//        System.out.println("i1 = " + i1);
+
+        String s = intToRoman(10000);
+        System.out.println("s:" + s);
+
+//        int mcmxciv = romanToInt("MCMXCIV");
+//        System.out.println("mcmxciv = " + mcmxciv);
     }
 
     /**
@@ -90,7 +96,7 @@ public class Exercises2 {
             return 0;
         }
         try {
-            a = upZero ? -Integer.valueOf(newNum.toString()) : Integer.valueOf(newNum.toString());
+            a = upZero ? -Integer.parseInt(newNum.toString()) : Integer.parseInt(newNum.toString());
         } catch (Exception e) {
             if (upZero) {
                 a = Integer.MIN_VALUE;
@@ -192,14 +198,62 @@ public class Exercises2 {
      */
     public static String intToRoman(int num) {
         String[] roman = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
-        int[] nums = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 5, 4, 1};
-        StringBuffer stringBuffer = new StringBuffer();
-        int index = 0;
-        while (num != 0) {
-            int i = num / nums[index];
-            if (i > 0) {
-                stringBuffer.append(roman[index]);
+        int[] number = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < number.length; i++) {
+            while (num >= number[i]) {
+                sb.append(roman[i]);
+                num -= number[i];
             }
+            if (num == 0) {
+                break;
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 罗马转数字
+     * MCMXCIV
+     */
+    public static int romanToInt(String s) {
+        int b = 0;
+        int toInt = charToInt(s.charAt(0));
+        int endInt = charToInt(s.charAt(s.length() - 1));
+        for (int i = 1; i < s.length(); i++) {
+            int newInt = charToInt(s.charAt(i));
+            System.out.println("newInt = " + newInt);
+            if (toInt >= newInt) {
+                b += toInt;
+            } else {
+                b -= toInt;
+            }
+            System.out.println("b = " + b);
+            toInt = newInt;
+            System.out.println("toInt = " + toInt);
+        }
+        b += endInt;
+        return b;
+    }
+
+    public static int charToInt(char a) {
+        switch (a) {
+            case 'M':
+                return 1000;
+            case 'D':
+                return 500;
+            case 'C':
+                return 100;
+            case 'L':
+                return 50;
+            case 'X':
+                return 10;
+            case 'V':
+                return 5;
+            case 'I':
+                return 1;
+            default:
+                return 0;
         }
     }
 }
